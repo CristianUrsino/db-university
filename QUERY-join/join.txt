@@ -66,11 +66,11 @@ filtrare i tentativi con voto minimo 18.
 SELECT  COUNT(`exam_student`.`exam_id`) AS `n_tentativi`,
 `students`.`surname`,
 MAX(`exam_student`.`vote`),
-COUNT(
-	SELECT 
-	) AS `n_tentativi_sopra_18`
+(SELECT COUNT(`exam_student`.`exam_id`)
+   FROM `exam_student`
+   WHERE `exam_student`.`student_id` = `students`.`id` AND `exam_student`.`vote` >= 18
+) AS `n_tentativi_sopra_18`
 FROM `students`
 INNER JOIN `exam_student`
 ON `exam_student`.`student_id` = `students`.`id`
-
-GROUP BY `students`.`id`
+GROUP BY `students`.`id`;
